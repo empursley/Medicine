@@ -32,6 +32,24 @@ a {
   background: #0f766e;
 }
 
+.hero-typing-cursor::after {
+  content: '|';
+  margin-left: 0.08em;
+  animation: hero-cursor-blink 1s steps(2, start) infinite;
+}
+
+@keyframes hero-cursor-blink {
+  0%,
+  45% {
+    opacity: 1;
+  }
+
+  46%,
+  100% {
+    opacity: 0;
+  }
+}
+
 body.scroll-tone-ready [data-scroll-tone] {
   opacity: 0.74;
   filter: brightness(0.82);
@@ -55,5 +73,9 @@ body.scroll-tone-ready [data-scroll-tone].is-visible {
     filter: none;
     transform: none;
     transition: none;
+  }
+
+  .hero-typing-cursor::after {
+    animation: none;
   }
 }

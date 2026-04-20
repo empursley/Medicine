@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react';
-import Typed from 'typed.js';
 
 const navItems = [
   { label: 'How it works', href: '#how-it-works' },
@@ -7,6 +6,8 @@ const navItems = [
   { label: 'For caregivers', href: '#caregivers' },
   { label: 'For offices', href: '#offices' },
 ];
+
+const heroPhrases = ['retain key visit information.', 'organize follow-up details.'];
 
 const steps = [
   {
@@ -187,29 +188,7 @@ function Header() {
 }
 
 function Hero() {
-  const typedElement = useRef(null);
-
-  useEffect(() => {
-    if (!typedElement.current) {
-      return undefined;
-    }
-
-    const typed = new Typed(typedElement.current, {
-      strings: ['retain key visit information.', 'organize follow-up details.'],
-      typeSpeed: 38,
-      backSpeed: 22,
-      backDelay: 1800,
-      startDelay: 350,
-      loop: true,
-      showCursor: true,
-      cursorChar: '|',
-      smartBackspace: true,
-    });
-
-    return () => {
-      typed.destroy();
-    };
-  }, []);
+  const typedHeroText = useTypewriterPhrases(heroPhrases);
 
   return (
     <section id="top" className="relative min-h-[68svh] overflow-hidden">
@@ -228,7 +207,9 @@ function Hero() {
           <h1 className="max-w-3xl text-4xl font-bold leading-[1.08] md:text-6xl">
             Help patients and caregivers{' '}
             <span className="block min-h-[2.25em] text-[#9be2d7] md:min-h-[2.15em]">
-              <span ref={typedElement} aria-hidden="true" />
+              <span className="hero-typing-cursor" aria-hidden="true">
+                {typedHeroText}
+              </span>
               <span className="sr-only">
                 retain key visit information and organize follow-up details.
               </span>
@@ -255,6 +236,45 @@ function Hero() {
       </div>
     </section>
   );
+}
+
+function useTypewriterPhrases(phrases) {
+  const [phraseIndex, setPhraseIndex] = useState(0);
+  const [visibleLength, setVisibleLength] = useState(0);
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  useEffect(() => {
+    const phrase = phrases[phraseIndex];
+    const hasFinishedTyping = visibleLength === phrase.length;
+    const hasFinishedDeleting = visibleLength === 0;
+    const delay = hasFinishedTyping && !isDeleting ? 1800 : isDeleting ? 24 : 42;
+
+    const timeoutId = window.setTimeout(() => {
+      if (!isDeleting && !hasFinishedTyping) {
+        setVisibleLength((currentLength) => currentLength + 1);
+        return;
+      }
+
+      if (!isDeleting) {
+        setIsDeleting(true);
+        return;
+      }
+
+      if (!hasFinishedDeleting) {
+        setVisibleLength((currentLength) => currentLength - 1);
+        return;
+      }
+
+      setIsDeleting(false);
+      setPhraseIndex((currentIndex) => (currentIndex + 1) % phrases.length);
+    }, delay);
+
+    return () => {
+      window.clearTimeout(timeoutId);
+    };
+  }, [isDeleting, phraseIndex, phrases, visibleLength]);
+
+  return phrases[phraseIndex].slice(0, visibleLength);
 }
 
 function HowItWorks() {
