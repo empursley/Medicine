@@ -13,17 +13,17 @@ const navItems = [
 const steps = [
   {
     eyebrow: 'Before the visit',
-    title: 'Prepare questions before the visit',
+    title: 'Patients prepare questions',
     body: 'Patients or caregivers can organize questions before the appointment begins.',
   },
   {
     eyebrow: 'During the visit',
-    title: 'Select the doctor and record the visit',
+    title: 'Patients select the doctor and record the visit',
     body: 'Each recording can be connected to the right doctor or office for clearer review later.',
   },
   {
     eyebrow: 'After the visit',
-    title: 'Review structured visit notes',
+    title: 'Patients review structured consultation visit notes',
     body: 'The conversation can be transcribed and summarized into notes, answers, and medication details.',
   },
 ];
@@ -93,11 +93,11 @@ function Header() {
         className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 md:px-8"
         aria-label="Main navigation"
       >
-        <a href="#top" className="flex items-center gap-3" aria-label="ProductName home">
+        <a href="#top" className="flex items-center gap-3" aria-label="Praxis Medical Systems home">
           <span className="grid h-9 w-9 place-items-center rounded-md bg-[#0f766e] text-sm font-bold text-white">
-            PN
+            P
           </span>
-          <span className="text-lg font-semibold">ProductName</span>
+          <span className="text-lg font-semibold">Praxis Medical Systems</span>
         </a>
 
         <div className="hidden items-center gap-7 lg:flex">
@@ -172,7 +172,7 @@ function Hero() {
             </span>
           </h1>
           <p className="mt-6 max-w-2xl text-lg leading-8 text-[#e7f4f1] md:text-xl">
-            ProductName gives medical offices a structured way to help patients prepare questions, record visits, and review follow-up information.
+            Praxis Medical Systems gives medical offices a structured way to help patients prepare questions, record visits, and review follow-up information.
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <a
@@ -223,7 +223,7 @@ function PainPoints() {
             Care information is often scattered across visits.
           </h2>
           <p className="mt-5 text-lg leading-8 text-[#48645e]">
-            ProductName is designed to help patients and caregivers keep questions, answers, notes, and next steps organized after each appointment.
+            Praxis Medical Systems is designed to help patients and caregivers keep questions, answers, notes, and next steps organized after each appointment.
           </p>
         </div>
 
@@ -309,7 +309,7 @@ function OfficeValue() {
             A patient-facing subscription that supports the appointment experience.
           </h2>
           <p className="mt-5 text-lg leading-8 text-[#d7ebe6]">
-            ProductName can be offered by practices as a value-added service for patients and families who need structured support around appointments and next steps.
+            Praxis Medical Systems can be offered by practices as a value-added service for patients and families who need structured support around appointments and next steps.
           </p>
         </div>
 
@@ -332,7 +332,7 @@ function CTA() {
       <div className="mx-auto max-w-5xl border-y border-[#d8e8e3] py-14 text-center">
         <p className="text-sm font-bold uppercase text-[#0f766e]">Next step</p>
         <h2 id="cta-title" className="mt-3 text-3xl font-bold leading-tight md:text-5xl">
-          See whether ProductName fits your patient support strategy.
+          See whether Praxis Medical Systems fits your patient support strategy.
         </h2>
         <p className="mx-auto mt-5 max-w-2xl text-lg leading-8 text-[#48645e]">
           This first-pass page uses placeholder copy that can be refined with your product name, sales process, compliance language, and visual system.
@@ -341,7 +341,7 @@ function CTA() {
           <a
             href="mailto:hello@example.com"
             className="rounded-md bg-[#0f766e] px-6 py-3 text-center text-base font-semibold text-white transition hover:bg-[#0b5f59] focus:outline-none focus:ring-2 focus:ring-[#0f766e] focus:ring-offset-2"
-            aria-label="Email the ProductName team to request a demo"
+            aria-label="Email the Praxis Medical Systems team to request a demo"
           >
             Request a demo
           </a>
@@ -361,7 +361,7 @@ function Footer() {
   return (
     <footer className="border-t border-[#d8e8e3] px-5 py-8 md:px-8">
       <div className="mx-auto flex max-w-7xl flex-col gap-4 text-sm text-[#48645e] md:flex-row md:items-center md:justify-between">
-        <p>© 2026 ProductName. Placeholder landing page content.</p>
+        <p>© 2026 Praxis Medical Systems. Placeholder landing page content.</p>
         <div className="flex flex-wrap gap-4">
           <a href="#how-it-works" className="hover:text-[#0f766e]">
             How it works
