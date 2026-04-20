@@ -209,7 +209,7 @@ function Hero() {
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <a
               href="#contact"
-              className="rounded-md bg-[#f26d5b] px-6 py-3 text-center text-base font-semibold text-white shadow-sm transition hover:bg-[#d95b4b] focus:outline-none focus:ring-2 focus:ring-[#f26d5b] focus:ring-offset-2 focus:ring-offset-[#16302b]"
+              className="rounded-md bg-[#8a3f32] px-6 py-3 text-center text-base font-semibold text-white shadow-sm transition hover:bg-[#743429] focus:outline-none focus:ring-2 focus:ring-[#8a3f32] focus:ring-offset-2 focus:ring-offset-[#16302b]"
             >
               Request a demo
             </a>
@@ -295,7 +295,7 @@ function StepCard({ step, index, activeStep }) {
       <div className="mb-5 flex h-11 w-11 items-center justify-center rounded-md bg-[#e8f6f3] text-base font-bold text-[#0f766e]">
         {index + 1}
       </div>
-      <p className="text-sm font-semibold text-[#b3483d]">{step.eyebrow}</p>
+      <p className="text-sm font-semibold text-[#8a3f32]">{step.eyebrow}</p>
       <h3 className="mt-2 text-xl font-semibold">{step.title}</h3>
       <p className="mt-3 leading-7 text-[#48645e]">{step.body}</p>
     </article>
@@ -384,7 +384,7 @@ function CaregiverMode() {
               <p className="text-sm font-semibold text-[#0f766e]">Supervisor mode</p>
               <p className="mt-1 text-lg font-semibold">Family support view</p>
             </div>
-            <span className="rounded-md bg-[#fff1ef] px-3 py-1 text-sm font-semibold text-[#b3483d]">
+            <span className="rounded-md bg-[#fff1ef] px-3 py-1 text-sm font-semibold text-[#8a3f32]">
               Placeholder
             </span>
           </div>
