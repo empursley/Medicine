@@ -1,6 +1,4 @@
-'use client';
-
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Typed from 'typed.js';
 
 const navItems = [
@@ -45,7 +43,7 @@ const problemCards = [
     body: (
       <>
         Patients often leave visits without retaining key instructions. Studies show that{' '}
-        <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC539473/" target="_blank" rel="noreferrer">
+        <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC539473/" target="_blank" rel="noopener noreferrer">
           <u>40–80%</u>
         </a>{' '}
         of medical information provided by healthcare practitioners is forgotten immediately, and much of what is remembered is incorrect.
@@ -179,7 +177,7 @@ function Header() {
 
         <a
           href="#contact"
-          className="rounded-md bg-[#0f766e] px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-[#0b5f59] focus:outline-none focus:ring-2 focus:ring-[#0f766e] focus:ring-offset-2"
+          className="rounded-md bg-[#8a3f32] px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-[#743429] focus:outline-none focus:ring-2 focus:ring-[#8a3f32] focus:ring-offset-2"
         >
           Request a demo
         </a>
@@ -216,7 +214,7 @@ function Hero() {
   return (
     <section id="top" className="relative min-h-[68svh] overflow-hidden">
       <img
-        src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=1800&q=85"
+        src="/hero-clinician-patient.jpg"
         alt="Clinician and patient reviewing healthcare information together"
         className="absolute inset-0 h-full w-full object-cover"
       />
@@ -260,6 +258,64 @@ function Hero() {
 }
 
 function HowItWorks() {
+  const [activeStep, setActiveStep] = useState(0);
+  const wheelLock = useRef(false);
+  const touchStart = useRef(null);
+
+  const showStep = (direction) => {
+    setActiveStep((currentStep) => (currentStep + direction + steps.length) % steps.length);
+  };
+
+  const handleWheel = (event) => {
+    if (Math.abs(event.deltaX) < Math.abs(event.deltaY) || wheelLock.current) {
+      return;
+    }
+
+    wheelLock.current = true;
+    showStep(event.deltaX > 0 ? 1 : -1);
+
+    window.setTimeout(() => {
+      wheelLock.current = false;
+    }, 420);
+  };
+
+  const handleTouchStart = (event) => {
+    const touch = event.touches[0];
+
+    touchStart.current = {
+      x: touch.clientX,
+      y: touch.clientY,
+    };
+  };
+
+  const handleTouchEnd = (event) => {
+    if (!touchStart.current) {
+      return;
+    }
+
+    const touch = event.changedTouches[0];
+    const deltaX = touchStart.current.x - touch.clientX;
+    const deltaY = touchStart.current.y - touch.clientY;
+
+    touchStart.current = null;
+
+    if (Math.abs(deltaX) < 40 || Math.abs(deltaX) < Math.abs(deltaY)) {
+      return;
+    }
+
+    showStep(deltaX > 0 ? 1 : -1);
+  };
+
+  const handleKeyDown = (event) => {
+    if (event.key === 'ArrowRight') {
+      showStep(1);
+    }
+
+    if (event.key === 'ArrowLeft') {
+      showStep(-1);
+    }
+  };
+
   return (
     <Section
       id="how-it-works"
@@ -268,22 +324,50 @@ function HowItWorks() {
       intro="The best way to see how Praxis Medical Systems works is through a patient's perspective."
     >
       <div
-        className="-mx-5 flex snap-x snap-mandatory gap-5 overflow-x-auto px-5 pb-4 [-webkit-overflow-scrolling:touch] md:mx-0 md:px-0"
+        className="relative min-h-[30rem] overflow-hidden focus:outline-none md:min-h-[25rem]"
         role="list"
         aria-label="How Praxis Medical Systems works from David's perspective"
         tabIndex={0}
+        onWheel={handleWheel}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+        onKeyDown={handleKeyDown}
       >
         {steps.map((step, index) => (
-          <StepCard key={step.title} step={step} index={index} />
+          <StepCard key={step.title} step={step} index={index} activeStep={activeStep} onSelect={setActiveStep} />
         ))}
       </div>
     </Section>
   );
 }
 
-function StepCard({ step, index }) {
+function StepCard({ step, index, activeStep, onSelect }) {
+  const position = getCarouselPosition(index, activeStep, steps.length);
+  const isVisible = Math.abs(position) <= 1;
+  const isActive = position === 0;
+  const isSideCard = isVisible && !isActive;
+  const positionClass = stepCardPositionClasses[position] || stepCardPositionClasses.hidden;
+
+  const selectSideCard = () => {
+    if (isSideCard) {
+      onSelect(index);
+    }
+  };
+
   return (
-    <article className="min-h-[27rem] w-[82%] flex-none snap-center rounded-lg border border-[#d8e8e3] bg-white p-6 shadow-soft md:min-h-[22rem] md:w-[31%]" role="listitem">
+    <article
+      className={`absolute left-1/2 top-0 min-h-[27rem] w-[82%] rounded-lg border border-[#d8e8e3] bg-white p-6 shadow-soft transition-all duration-300 ease-out md:min-h-[22rem] md:w-[32%] ${positionClass}`}
+      role="listitem"
+      aria-hidden={!isVisible}
+      tabIndex={isSideCard ? 0 : undefined}
+      onClick={selectSideCard}
+      onKeyDown={(event) => {
+        if (isSideCard && (event.key === 'Enter' || event.key === ' ')) {
+          event.preventDefault();
+          selectSideCard();
+        }
+      }}
+    >
       <div className="mb-5 flex h-11 w-11 items-center justify-center rounded-md bg-[#e8f6f3] text-base font-bold text-[#0f766e]">
         {index + 1}
       </div>
@@ -292,6 +376,27 @@ function StepCard({ step, index }) {
       <p className="mt-3 leading-7 text-[#48645e]">{step.body}</p>
     </article>
   );
+}
+
+const stepCardPositionClasses = {
+  '-2':
+    'translate-x-[calc(-50%_-_170%)] scale-[0.94] opacity-0 pointer-events-none z-0 md:translate-x-[calc(-50%_-_224%)]',
+  '-1':
+    'translate-x-[calc(-50%_-_85%)] scale-[0.94] opacity-[0.55] cursor-pointer z-[1] md:translate-x-[calc(-50%_-_112%)]',
+  0: '-translate-x-1/2 scale-100 opacity-100 cursor-default z-[2]',
+  1: 'translate-x-[calc(-50%_+_85%)] scale-[0.94] opacity-[0.55] cursor-pointer z-[1] md:translate-x-[calc(-50%_+_112%)]',
+  2: 'translate-x-[calc(-50%_+_170%)] scale-[0.94] opacity-0 pointer-events-none z-0 md:translate-x-[calc(-50%_+_224%)]',
+  hidden: 'translate-x-[calc(-50%_+_170%)] scale-[0.94] opacity-0 pointer-events-none z-0',
+};
+
+function getCarouselPosition(index, activeIndex, totalItems) {
+  let position = (index - activeIndex + totalItems) % totalItems;
+
+  if (position > totalItems / 2) {
+    position -= totalItems;
+  }
+
+  return position;
 }
 
 function PainPoints() {
@@ -423,7 +528,7 @@ function CTA() {
         <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
           <a
             href="mailto:hello@example.com"
-            className="rounded-md bg-[#0f766e] px-6 py-3 text-center text-base font-semibold text-white transition hover:bg-[#0b5f59] focus:outline-none focus:ring-2 focus:ring-[#0f766e] focus:ring-offset-2"
+            className="rounded-md bg-[#8a3f32] px-6 py-3 text-center text-base font-semibold text-white transition hover:bg-[#743429] focus:outline-none focus:ring-2 focus:ring-[#8a3f32] focus:ring-offset-2"
             aria-label="Email the Praxis Medical Systems team to request a demo"
           >
             Request a demo
