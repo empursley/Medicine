@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Typed from 'typed.js';
 
 const navItems = [
@@ -13,25 +13,54 @@ const navItems = [
 const steps = [
   {
     eyebrow: 'Before the visit',
-    title: 'Patients prepare questions',
-    body: 'Patients or caregivers can organize questions before the appointment begins.',
+    title: 'David prepares questions',
+    body: 'David or his caregiver can organize questions before the appointment begins.',
   },
   {
     eyebrow: 'During the visit',
-    title: 'Patients select the doctor and record the visit',
-    body: 'Each recording can be connected to the right doctor or office for clearer review later.',
+    title: 'David goes to his appointment',
+    body: 'David selects the doctor and records the visit. The recording can be connected to the right doctor or office for clearer review later.',
   },
   {
     eyebrow: 'After the visit',
-    title: 'Patients review structured consultation visit notes',
+    title: 'David reviews structured visit notes',
     body: 'The conversation can be transcribed and summarized into notes, answers, and medication details.',
+  },
+  {
+    eyebrow: 'Between visits',
+    title: 'David tracks medications',
+    body: 'David can set a structured medication schedule, including dosage and timing. The system provides reminders to help ensure medications are taken correctly and consistently.',
+  },
+  {
+    eyebrow: 'Caregiver support',
+    title: "David's caregiver reviews activity",
+    body: 'His caregiver can access the system from their own device to review activity. They can see whether key actions, such as questions asked, notes recorded, and medications taken, have been completed through a simple checklist view.',
   },
 ];
 
-const painPoints = [
-  'Older patients may see multiple doctors and receive information across several offices.',
-  'Family caregivers often help manage care without being present for every appointment.',
-  'Questions, answers, and medication changes can be difficult to track after the visit.',
+const problemCards = [
+  {
+    eyebrow: 'Patient problem',
+    title: 'Patients lose critical details after appointments.',
+    body: (
+      <>
+        Patients often leave visits without retaining key instructions. Studies show that{' '}
+        <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC539473/" target="_blank" rel="noreferrer">
+          <u>40–80%</u>
+        </a>{' '}
+        of medical information provided by healthcare practitioners is forgotten immediately, and much of what is remembered is incorrect.
+      </>
+    ),
+  },
+  {
+    eyebrow: 'Office problem',
+    title: 'Offices spend time answering repeat questions.',
+    body: (
+      <>
+        Medical offices already operate under time pressure. Follow-up calls about information covered in prior visits create unnecessary administrative burden and reduce time available for patient care.
+      </>
+    ),
+  },
 ];
 
 const benefits = [
@@ -195,42 +224,111 @@ function Hero() {
 }
 
 function HowItWorks() {
+  const [activeStep, setActiveStep] = useState(0);
+
+  const showStep = (direction) => {
+    setActiveStep((currentStep) => (currentStep + direction + steps.length) % steps.length);
+  };
+
   return (
-    <Section id="how-it-works" eyebrow="How it works" title="A structured process from preparation to follow-up.">
-      <div className="grid gap-5 md:grid-cols-3">
-        {steps.map((step, index) => (
-          <article key={step.title} className="rounded-lg border border-[#d8e8e3] bg-white p-6 shadow-soft">
-            <div className="mb-5 flex h-11 w-11 items-center justify-center rounded-md bg-[#e8f6f3] text-base font-bold text-[#0f766e]">
-              {index + 1}
-            </div>
-            <p className="text-sm font-semibold text-[#b3483d]">{step.eyebrow}</p>
-            <h3 className="mt-2 text-xl font-semibold">{step.title}</h3>
-            <p className="mt-3 leading-7 text-[#48645e]">{step.body}</p>
-          </article>
-        ))}
+    <Section
+      id="how-it-works"
+      eyebrow="How it works"
+      title="A structured process from preparation to follow-up."
+      intro="The best way to see how Praxis Medical Systems works is through a patient's perspective."
+    >
+      <div className="relative">
+        <div className="relative min-h-[30rem] overflow-hidden md:min-h-[25rem]">
+          {steps.map((step, index) => (
+            <StepCard key={step.title} step={step} index={index} activeStep={activeStep} />
+          ))}
+        </div>
+
+        <button
+          type="button"
+          onClick={() => showStep(-1)}
+          className="absolute left-0 top-1/2 z-10 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-md border border-[#9bc8bd] bg-white text-xl font-semibold text-[#16302b] shadow-sm transition hover:bg-[#eef8f5] focus:outline-none focus:ring-2 focus:ring-[#0f766e] focus:ring-offset-2"
+          aria-label="Show previous step"
+        >
+          <span aria-hidden="true">←</span>
+        </button>
+        <button
+          type="button"
+          onClick={() => showStep(1)}
+          className="absolute right-0 top-1/2 z-10 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-md border border-[#9bc8bd] bg-white text-xl font-semibold text-[#16302b] shadow-sm transition hover:bg-[#eef8f5] focus:outline-none focus:ring-2 focus:ring-[#0f766e] focus:ring-offset-2"
+          aria-label="Show next step"
+        >
+          <span aria-hidden="true">→</span>
+        </button>
+      </div>
+
+      <div className="mt-4 flex justify-center">
+        <p className="min-w-24 text-center text-sm font-semibold text-[#48645e]" aria-live="polite">
+          Step {activeStep + 1} of {steps.length}
+        </p>
       </div>
     </Section>
   );
 }
 
+function StepCard({ step, index, activeStep }) {
+  const position = getCarouselPosition(index, activeStep, steps.length);
+  const isVisible = Math.abs(position) <= 1;
+  const isActive = position === 0;
+
+  return (
+    <article
+      className="absolute left-1/2 top-0 min-h-[27rem] w-[82%] rounded-lg border border-[#d8e8e3] bg-white p-6 shadow-soft transition-all duration-300 ease-out translate-x-[calc(-50%+var(--x-mobile))] scale-[var(--card-scale)] md:min-h-[22rem] md:w-[32%] md:translate-x-[calc(-50%+var(--x-desktop))]"
+      style={{
+        '--x-mobile': `${position * 85}%`,
+        '--x-desktop': `${position * 112}%`,
+        '--card-scale': isActive ? '1' : '0.94',
+        opacity: isVisible ? (isActive ? 1 : 0.55) : 0,
+        pointerEvents: isVisible ? 'auto' : 'none',
+        zIndex: isActive ? 2 : 1,
+      }}
+      aria-hidden={!isVisible}
+    >
+      <div className="mb-5 flex h-11 w-11 items-center justify-center rounded-md bg-[#e8f6f3] text-base font-bold text-[#0f766e]">
+        {index + 1}
+      </div>
+      <p className="text-sm font-semibold text-[#b3483d]">{step.eyebrow}</p>
+      <h3 className="mt-2 text-xl font-semibold">{step.title}</h3>
+      <p className="mt-3 leading-7 text-[#48645e]">{step.body}</p>
+    </article>
+  );
+}
+
+function getCarouselPosition(index, activeIndex, totalItems) {
+  let position = (index - activeIndex + totalItems) % totalItems;
+
+  if (position > totalItems / 2) {
+    position -= totalItems;
+  }
+
+  return position;
+}
+
 function PainPoints() {
   return (
     <section className="bg-[#eef8f5] px-5 py-20 md:px-8" aria-labelledby="problem-title">
-      <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
-        <div>
-          <p className="text-sm font-bold uppercase text-[#0f766e]">The problem</p>
+      <div className="mx-auto max-w-7xl">
+        <div className="max-w-4xl">
+          <p className="text-sm font-bold uppercase text-[#0f766e]">The Problem</p>
           <h2 id="problem-title" className="mt-3 text-3xl font-bold leading-tight md:text-5xl">
-            Care information is often scattered across visits.
+            Missed visit details create work for patients and practices.
           </h2>
-          <p className="mt-5 text-lg leading-8 text-[#48645e]">
-            Praxis Medical Systems is designed to help patients and caregivers keep questions, answers, notes, and next steps organized after each appointment.
+          <p className="mt-5 max-w-3xl text-lg leading-8 text-[#48645e]">
+            Patients need clear information after appointments. Offices need fewer avoidable calls about instructions, notes, and next steps that were already discussed.
           </p>
         </div>
 
-        <div className="grid gap-4">
-          {painPoints.map((point) => (
-            <div key={point} className="rounded-lg border border-[#cfe4de] bg-[#fbfdfc] p-5 shadow-sm">
-              <p className="leading-7 text-[#34524c]">{point}</p>
+        <div className="mt-12 grid gap-10 border-t border-[#cfe4de] pt-10 md:grid-cols-2 md:gap-0 md:divide-x md:divide-[#cfe4de]">
+          {problemCards.map((problem, index) => (
+            <div key={problem.title} className={index === 0 ? 'md:pr-12' : 'md:pl-12'}>
+              <p className="text-sm font-bold uppercase text-[#0f766e]">{problem.eyebrow}</p>
+              <h3 className="mt-3 text-2xl font-semibold leading-tight md:text-3xl">{problem.title}</h3>
+              <p className="mt-4 leading-7 text-[#34524c]">{problem.body}</p>
             </div>
           ))}
         </div>
