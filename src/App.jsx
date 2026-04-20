@@ -13,50 +13,50 @@ const navItems = [
 const steps = [
   {
     eyebrow: 'Before the visit',
-    title: 'Patients write down questions',
-    body: 'Patients or caregivers can collect the questions they want to remember before they arrive.',
+    title: 'Prepare questions before the visit',
+    body: 'Patients or caregivers can organize questions before the appointment begins.',
   },
   {
     eyebrow: 'During the visit',
-    title: 'They select the office and record',
-    body: 'The visit can be associated with the right doctor or office so notes stay organized afterward.',
+    title: 'Select the doctor and record the visit',
+    body: 'Each recording can be connected to the right doctor or office for clearer review later.',
   },
   {
     eyebrow: 'After the visit',
-    title: 'Notes become easier to review',
-    body: 'The conversation is transcribed and summarized into visit notes, answers, and medication details.',
+    title: 'Review structured visit notes',
+    body: 'The conversation can be transcribed and summarized into notes, answers, and medication details.',
   },
 ];
 
 const painPoints = [
-  'Older patients may see several doctors and receive information in different places.',
-  'Family caregivers are often trying to help without being in the exam room.',
-  'Important questions, answers, and medication changes can be hard to remember later.',
+  'Older patients may see multiple doctors and receive information across several offices.',
+  'Family caregivers often help manage care without being present for every appointment.',
+  'Questions, answers, and medication changes can be difficult to track after the visit.',
 ];
 
 const benefits = [
   {
     title: 'Clearer preparation',
-    body: 'Designed to help patients arrive with questions already written down and ready to discuss.',
+    body: 'Designed to help patients arrive with organized questions ready to discuss.',
   },
   {
-    title: 'Less scattered information',
-    body: 'Can allow visit notes, answers, doctor details, and medication information to live together.',
+    title: 'More consistent records',
+    body: 'Can keep visit notes, answers, doctor details, and medication information in one place.',
   },
   {
-    title: 'More confidence after appointments',
+    title: 'Clearer review after visits',
     body: 'May help patients and caregivers review what was discussed without relying only on memory.',
   },
   {
     title: 'Support between visits',
-    body: 'Medication reminders can help patients keep follow-up tasks visible in everyday life.',
+    body: 'Medication reminders can help keep follow-up tasks visible between appointments.',
   },
 ];
 
 const officeReasons = [
   {
     title: 'Offer a practical patient support tool',
-    body: 'Practices can provide a simple companion for patients who need help keeping visits organized.',
+    body: 'Practices can provide a structured tool for patients who need help keeping visits organized.',
   },
   {
     title: 'Help families stay aligned',
@@ -64,7 +64,7 @@ const officeReasons = [
   },
   {
     title: 'Create a differentiated service',
-    body: 'Potential office benefits include a more supportive patient experience without positioning the product as clinical decision support.',
+    body: 'Potential office benefits include a more organized patient experience without positioning the product as clinical decision support.',
   },
 ];
 
@@ -116,7 +116,7 @@ function Header() {
           href="#contact"
           className="rounded-md bg-[#0f766e] px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-[#0b5f59] focus:outline-none focus:ring-2 focus:ring-[#0f766e] focus:ring-offset-2"
         >
-          Talk to our team
+          Request a demo
         </a>
       </nav>
     </header>
@@ -132,7 +132,7 @@ function Hero() {
     }
 
     const typed = new Typed(typedElement.current, {
-      strings: ['Never forget what your doctor said.', 'Stay organized across every visit.'],
+      strings: ['retain key visit information.', 'organize follow-up details.'],
       typeSpeed: 38,
       backSpeed: 22,
       backDelay: 1800,
@@ -160,26 +160,26 @@ function Hero() {
       <div className="relative mx-auto flex min-h-[68svh] max-w-7xl items-center px-5 py-16 md:px-8">
         <div className="max-w-3xl text-white">
           <p className="mb-5 inline-flex rounded-md border border-white/25 bg-white/10 px-3 py-1.5 text-sm font-semibold">
-            Patient visit organization for clinics and provider groups
+            Patient visit organization for medical offices
           </p>
           <h1 className="max-w-3xl text-4xl font-bold leading-[1.08] md:text-6xl">
             Help patients and caregivers{' '}
             <span className="block min-h-[2.25em] text-[#9be2d7] md:min-h-[2.15em]">
               <span ref={typedElement} aria-hidden="true" />
               <span className="sr-only">
-                never forget what their doctor said and stay organized across every visit.
+                retain key visit information and organize follow-up details.
               </span>
             </span>
           </h1>
           <p className="mt-6 max-w-2xl text-lg leading-8 text-[#e7f4f1] md:text-xl">
-            ProductName is a subscription service medical offices can offer to patients who need a simpler way to prepare questions, record visits, and review follow-up information.
+            ProductName gives medical offices a structured way to help patients prepare questions, record visits, and review follow-up information.
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <a
               href="#contact"
               className="rounded-md bg-[#f26d5b] px-6 py-3 text-center text-base font-semibold text-white shadow-sm transition hover:bg-[#d95b4b] focus:outline-none focus:ring-2 focus:ring-[#f26d5b] focus:ring-offset-2 focus:ring-offset-[#16302b]"
             >
-              Request a practice walkthrough
+              Request a demo
             </a>
             <a
               href="#how-it-works"
@@ -196,7 +196,7 @@ function Hero() {
 
 function HowItWorks() {
   return (
-    <Section id="how-it-works" eyebrow="How it works" title="A simpler path from appointment prep to follow-up.">
+    <Section id="how-it-works" eyebrow="How it works" title="A structured process from preparation to follow-up.">
       <div className="grid gap-5 md:grid-cols-3">
         {steps.map((step, index) => (
           <article key={step.title} className="rounded-lg border border-[#d8e8e3] bg-white p-6 shadow-soft">
@@ -220,10 +220,10 @@ function PainPoints() {
         <div>
           <p className="text-sm font-bold uppercase text-[#0f766e]">The problem</p>
           <h2 id="problem-title" className="mt-3 text-3xl font-bold leading-tight md:text-5xl">
-            The details of care often live in too many places.
+            Care information is often scattered across visits.
           </h2>
           <p className="mt-5 text-lg leading-8 text-[#48645e]">
-            ProductName is designed for the everyday moments when patients leave an appointment and need to remember what was asked, what was answered, and what happens next.
+            ProductName is designed to help patients and caregivers keep questions, answers, notes, and next steps organized after each appointment.
           </p>
         </div>
 
@@ -244,8 +244,8 @@ function Benefits() {
     <Section
       id="benefits"
       eyebrow="Benefits"
-      title="Built around preparation, memory, and shared understanding."
-      intro="The product does not replace clinical guidance. It is positioned as an organization layer that can help patients and families keep track of what happened around the visit."
+      title="Designed for preparation, review, and follow-through."
+      intro="The product does not replace clinical guidance. It is positioned as an organization layer that can help patients and families track information around each visit."
     >
       <div className="grid gap-5 md:grid-cols-2">
         {benefits.map((benefit) => (
@@ -266,10 +266,10 @@ function CaregiverMode() {
         <div>
           <p className="text-sm font-bold uppercase text-[#0f766e]">Caregiver support</p>
           <h2 id="caregiver-title" className="mt-3 text-3xl font-bold leading-tight md:text-5xl">
-            Supervisor mode can help families support care without taking over.
+            Supervisor mode can help families review care details with permission.
           </h2>
           <p className="mt-5 text-lg leading-8 text-[#48645e]">
-            With patient permission and appropriate account settings, a caregiver or adult child can help watch for missed follow-up items, review appointment summaries, and keep medication reminders visible.
+            With patient permission and appropriate account settings, a caregiver or adult child can review appointment summaries, follow-up items, and medication reminders.
           </p>
           <div className="mt-8 grid gap-4 sm:grid-cols-2">
             <FeaturePill title="Shared review" body="Caregivers can review visit notes when access is granted." />
@@ -306,10 +306,10 @@ function OfficeValue() {
         <div className="max-w-3xl">
           <p className="text-sm font-bold uppercase text-[#7ed7c7]">Why offices would pay</p>
           <h2 id="office-title" className="mt-3 text-3xl font-bold leading-tight md:text-5xl">
-            A patient-facing subscription that supports the experience around the visit.
+            A patient-facing subscription that supports the appointment experience.
           </h2>
           <p className="mt-5 text-lg leading-8 text-[#d7ebe6]">
-            ProductName can be offered by practices as a value-added service for patients and families who need extra help keeping appointments and next steps organized.
+            ProductName can be offered by practices as a value-added service for patients and families who need structured support around appointments and next steps.
           </p>
         </div>
 
@@ -332,18 +332,18 @@ function CTA() {
       <div className="mx-auto max-w-5xl border-y border-[#d8e8e3] py-14 text-center">
         <p className="text-sm font-bold uppercase text-[#0f766e]">Next step</p>
         <h2 id="cta-title" className="mt-3 text-3xl font-bold leading-tight md:text-5xl">
-          Explore whether ProductName fits your patient support strategy.
+          See whether ProductName fits your patient support strategy.
         </h2>
         <p className="mx-auto mt-5 max-w-2xl text-lg leading-8 text-[#48645e]">
-          This first-pass page uses placeholder copy and can be refined with your product name, sales motion, compliance language, and visual system.
+          This first-pass page uses placeholder copy that can be refined with your product name, sales process, compliance language, and visual system.
         </p>
         <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
           <a
             href="mailto:hello@example.com"
             className="rounded-md bg-[#0f766e] px-6 py-3 text-center text-base font-semibold text-white transition hover:bg-[#0b5f59] focus:outline-none focus:ring-2 focus:ring-[#0f766e] focus:ring-offset-2"
-            aria-label="Email the ProductName team to request a practice walkthrough"
+            aria-label="Email the ProductName team to request a demo"
           >
-            Request a practice walkthrough
+            Request a demo
           </a>
           <a
             href="#benefits"
