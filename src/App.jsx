@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import Typed from 'typed.js';
 
 const navItems = [
@@ -260,12 +260,6 @@ function Hero() {
 }
 
 function HowItWorks() {
-  const [activeStep, setActiveStep] = useState(0);
-
-  const showStep = (direction) => {
-    setActiveStep((currentStep) => (currentStep + direction + steps.length) % steps.length);
-  };
-
   return (
     <Section
       id="how-it-works"
@@ -273,58 +267,23 @@ function HowItWorks() {
       title="A structured process from preparation to follow-up."
       intro="The best way to see how Praxis Medical Systems works is through a patient's perspective."
     >
-      <div className="relative">
-        <div className="relative min-h-[30rem] overflow-hidden md:min-h-[25rem]">
-          {steps.map((step, index) => (
-            <StepCard key={step.title} step={step} index={index} activeStep={activeStep} />
-          ))}
-        </div>
-
-        <button
-          type="button"
-          onClick={() => showStep(-1)}
-          className="absolute left-0 top-1/2 z-10 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-md border border-[#9bc8bd] bg-white text-xl font-semibold text-[#16302b] shadow-sm transition hover:bg-[#eef8f5] focus:outline-none focus:ring-2 focus:ring-[#0f766e] focus:ring-offset-2"
-          aria-label="Show previous step"
-        >
-          <span aria-hidden="true">←</span>
-        </button>
-        <button
-          type="button"
-          onClick={() => showStep(1)}
-          className="absolute right-0 top-1/2 z-10 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-md border border-[#9bc8bd] bg-white text-xl font-semibold text-[#16302b] shadow-sm transition hover:bg-[#eef8f5] focus:outline-none focus:ring-2 focus:ring-[#0f766e] focus:ring-offset-2"
-          aria-label="Show next step"
-        >
-          <span aria-hidden="true">→</span>
-        </button>
-      </div>
-
-      <div className="mt-4 flex justify-center">
-        <p className="min-w-24 text-center text-sm font-semibold text-[#48645e]" aria-live="polite">
-          Step {activeStep + 1} of {steps.length}
-        </p>
+      <div
+        className="-mx-5 flex snap-x snap-mandatory gap-5 overflow-x-auto px-5 pb-4 [-webkit-overflow-scrolling:touch] md:mx-0 md:px-0"
+        role="list"
+        aria-label="How Praxis Medical Systems works from David's perspective"
+        tabIndex={0}
+      >
+        {steps.map((step, index) => (
+          <StepCard key={step.title} step={step} index={index} />
+        ))}
       </div>
     </Section>
   );
 }
 
-function StepCard({ step, index, activeStep }) {
-  const position = getCarouselPosition(index, activeStep, steps.length);
-  const isVisible = Math.abs(position) <= 1;
-  const isActive = position === 0;
-
+function StepCard({ step, index }) {
   return (
-    <article
-      className="absolute left-1/2 top-0 min-h-[27rem] w-[82%] rounded-lg border border-[#d8e8e3] bg-white p-6 shadow-soft transition-all duration-300 ease-out translate-x-[calc(-50%+var(--x-mobile))] scale-[var(--card-scale)] md:min-h-[22rem] md:w-[32%] md:translate-x-[calc(-50%+var(--x-desktop))]"
-      style={{
-        '--x-mobile': `${position * 85}%`,
-        '--x-desktop': `${position * 112}%`,
-        '--card-scale': isActive ? '1' : '0.94',
-        opacity: isVisible ? (isActive ? 1 : 0.55) : 0,
-        pointerEvents: isVisible ? 'auto' : 'none',
-        zIndex: isActive ? 2 : 1,
-      }}
-      aria-hidden={!isVisible}
-    >
+    <article className="min-h-[27rem] w-[82%] flex-none snap-center rounded-lg border border-[#d8e8e3] bg-white p-6 shadow-soft md:min-h-[22rem] md:w-[31%]" role="listitem">
       <div className="mb-5 flex h-11 w-11 items-center justify-center rounded-md bg-[#e8f6f3] text-base font-bold text-[#0f766e]">
         {index + 1}
       </div>
@@ -333,16 +292,6 @@ function StepCard({ step, index, activeStep }) {
       <p className="mt-3 leading-7 text-[#48645e]">{step.body}</p>
     </article>
   );
-}
-
-function getCarouselPosition(index, activeIndex, totalItems) {
-  let position = (index - activeIndex + totalItems) % totalItems;
-
-  if (position > totalItems / 2) {
-    position -= totalItems;
-  }
-
-  return position;
 }
 
 function PainPoints() {
