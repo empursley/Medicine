@@ -31,3 +31,29 @@ a {
   color: #fbfdfc;
   background: #0f766e;
 }
+
+body.scroll-tone-ready [data-scroll-tone] {
+  opacity: 0.74;
+  filter: brightness(0.82);
+  transform: translateY(18px);
+  transition:
+    opacity 700ms ease,
+    filter 700ms ease,
+    transform 700ms ease;
+}
+
+body.scroll-tone-ready [data-scroll-tone].is-visible {
+  opacity: 1;
+  filter: brightness(1);
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.scroll-tone-ready [data-scroll-tone],
+  body.scroll-tone-ready [data-scroll-tone].is-visible {
+    opacity: 1;
+    filter: none;
+    transform: none;
+    transition: none;
+  }
+}

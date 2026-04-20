@@ -98,6 +98,8 @@ const officeReasons = [
 ];
 
 function App() {
+  useScrollToneReveal();
+
   return (
     <div className="min-h-screen bg-[#fbfdfc] text-[#16302b]">
       <Header />
@@ -113,6 +115,37 @@ function App() {
       <Footer />
     </div>
   );
+}
+
+function useScrollToneReveal() {
+  useEffect(() => {
+    const elements = document.querySelectorAll('[data-scroll-tone]');
+
+    if (!elements.length) {
+      return undefined;
+    }
+
+    document.body.classList.add('scroll-tone-ready');
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          entry.target.classList.toggle('is-visible', entry.isIntersecting);
+        });
+      },
+      {
+        rootMargin: '-12% 0px -18%',
+        threshold: 0.12,
+      },
+    );
+
+    elements.forEach((element) => observer.observe(element));
+
+    return () => {
+      observer.disconnect();
+      document.body.classList.remove('scroll-tone-ready');
+    };
+  }, []);
 }
 
 function Header() {
@@ -314,7 +347,7 @@ function getCarouselPosition(index, activeIndex, totalItems) {
 
 function PainPoints() {
   return (
-    <section className="bg-[#eef8f5] px-5 py-20 md:px-8" aria-labelledby="problem-title">
+    <section className="bg-[#eef8f5] px-5 py-20 md:px-8" aria-labelledby="problem-title" data-scroll-tone>
       <div className="mx-auto max-w-7xl">
         <div className="max-w-4xl">
           <p className="text-sm font-bold uppercase text-[#0f766e]">The Problem</p>
@@ -362,7 +395,7 @@ function Benefits() {
 
 function CaregiverMode() {
   return (
-    <section id="caregivers" className="px-5 py-20 md:px-8" aria-labelledby="caregiver-title">
+    <section id="caregivers" className="px-5 py-20 md:px-8" aria-labelledby="caregiver-title" data-scroll-tone>
       <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
         <div>
           <p className="text-sm font-bold uppercase text-[#0f766e]">Caregiver support</p>
@@ -402,7 +435,7 @@ function CaregiverMode() {
 
 function OfficeValue() {
   return (
-    <section id="offices" className="bg-[#16302b] px-5 py-20 text-white md:px-8" aria-labelledby="office-title">
+    <section id="offices" className="bg-[#16302b] px-5 py-20 text-white md:px-8" aria-labelledby="office-title" data-scroll-tone>
       <div className="mx-auto max-w-7xl">
         <div className="max-w-3xl">
           <p className="text-sm font-bold uppercase text-[#7ed7c7]">Why offices would pay</p>
@@ -429,7 +462,7 @@ function OfficeValue() {
 
 function CTA() {
   return (
-    <section id="contact" className="px-5 py-20 md:px-8" aria-labelledby="cta-title">
+    <section id="contact" className="px-5 py-20 md:px-8" aria-labelledby="cta-title" data-scroll-tone>
       <div className="mx-auto max-w-5xl border-y border-[#d8e8e3] py-14 text-center">
         <p className="text-sm font-bold uppercase text-[#0f766e]">Next step</p>
         <h2 id="cta-title" className="mt-3 text-3xl font-bold leading-tight md:text-5xl">
@@ -481,7 +514,7 @@ function Footer() {
 
 function Section({ id, eyebrow, title, intro, children }) {
   return (
-    <section id={id} className="px-5 py-20 md:px-8" aria-labelledby={`${id}-title`}>
+    <section id={id} className="px-5 py-20 md:px-8" aria-labelledby={`${id}-title`} data-scroll-tone>
       <div className="mx-auto max-w-7xl">
         <div className="mb-10 max-w-3xl">
           <p className="text-sm font-bold uppercase text-[#0f766e]">{eyebrow}</p>
