@@ -123,9 +123,12 @@ function Header() {
         aria-label="Main navigation"
       >
         <a href="#top" className="flex items-center gap-3" aria-label="Praxis Medical Systems home">
-          <span className="grid h-9 w-9 place-items-center rounded-md bg-[#0f766e] text-sm font-bold text-white">
-            P
-          </span>
+          <img
+            src="/praxis-logo.jpeg"
+            alt=""
+            className="h-9 w-9 rounded-md object-cover"
+            aria-hidden="true"
+          />
           <span className="text-lg font-semibold">Praxis Medical Systems</span>
         </a>
 
