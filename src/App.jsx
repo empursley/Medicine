@@ -12,27 +12,27 @@ const heroPhrases = ['retain key visit information.', 'organize follow-up detail
 const steps = [
   {
     eyebrow: 'Before the visit',
-    title: 'David prepares questions',
-    body: 'David or his caregiver can organize questions before the appointment begins.',
+    title: 'John prepares questions',
+    body: 'John or his caregiver can organize questions before the appointment begins.',
   },
   {
     eyebrow: 'During the visit',
-    title: 'David goes to his appointment',
-    body: 'David selects the doctor and records the visit. The recording can be connected to the right doctor or office for clearer review later.',
+    title: 'John goes to his appointment',
+    body: 'John selects the doctor and records the visit. The recording can be connected to the right doctor or office for clearer review later.',
   },
   {
     eyebrow: 'After the visit',
-    title: 'David reviews structured visit notes',
+    title: 'John reviews structured visit notes',
     body: 'The conversation can be transcribed and summarized into notes, answers, and medication details.',
   },
   {
     eyebrow: 'Between visits',
-    title: 'David tracks medications',
-    body: 'David can set a structured medication schedule, including dosage and timing. The system provides reminders to help ensure medications are taken correctly and consistently.',
+    title: 'John tracks medications',
+    body: 'John can set a structured medication schedule, including dosage and timing. The system provides reminders to help ensure medications are taken correctly and consistently.',
   },
   {
     eyebrow: 'Caregiver support',
-    title: "David's caregiver reviews activity",
+    title: "John's caregiver reviews activity",
     body: 'His caregiver can access the system from their own device to review activity. They can see whether key actions, such as questions asked, notes recorded, and medications taken, have been completed through a simple checklist view.',
   },
 ];
@@ -346,7 +346,7 @@ function HowItWorks() {
       <div
         className="relative min-h-[30rem] overflow-hidden focus:outline-none md:min-h-[25rem]"
         role="list"
-        aria-label="How Praxis Medical Systems works from David's perspective"
+        aria-label="How Praxis Medical Systems works from John's perspective"
         tabIndex={0}
         onWheel={handleWheel}
         onTouchStart={handleTouchStart}
