@@ -148,8 +148,39 @@ function useScrollToneReveal() {
 }
 
 function Header() {
+  const [headerFadeState, setHeaderFadeState] = useState('top');
+
+  useEffect(() => {
+    const updateHeaderFade = () => {
+      const scrollY = window.scrollY;
+
+      if (scrollY < 24) {
+        setHeaderFadeState('top');
+        return;
+      }
+
+      if (scrollY < 160) {
+        setHeaderFadeState('mid');
+        return;
+      }
+
+      setHeaderFadeState('low');
+    };
+
+    updateHeaderFade();
+    window.addEventListener('scroll', updateHeaderFade, { passive: true });
+
+    return () => {
+      window.removeEventListener('scroll', updateHeaderFade);
+    };
+  }, []);
+
+  const headerFadeClass = headerFadeClasses[headerFadeState] || headerFadeClasses.top;
+
   return (
-    <header className="sticky top-0 z-30 border-b border-[#d8e8e3] bg-[#fbfdfc]/95 backdrop-blur">
+    <header
+      className={`sticky top-0 z-30 border-b border-[#d8e8e3] backdrop-blur transition-all duration-300 ease-out ${headerFadeClass}`}
+    >
       <nav
         className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 md:px-8"
         aria-label="Main navigation"
@@ -186,6 +217,12 @@ function Header() {
     </header>
   );
 }
+
+const headerFadeClasses = {
+  top: 'bg-[#fbfdfc]/95 opacity-100',
+  mid: 'bg-[#fbfdfc]/85 opacity-85',
+  low: 'bg-[#fbfdfc]/70 opacity-65',
+};
 
 function Hero() {
   const typedHeroText = useTypewriterPhrases(heroPhrases);
