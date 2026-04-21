@@ -32,6 +32,40 @@ a {
   background: #0f766e;
 }
 
+.liquid-glass-banner {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border-bottom: 1px solid rgba(216, 232, 227, 0.72);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.62), rgba(246, 252, 250, 0.34)),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.24), rgba(155, 226, 215, 0.1), rgba(138, 63, 50, 0.08));
+  box-shadow:
+    0 12px 32px rgba(22, 48, 43, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+}
+
+.liquid-glass-banner::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.34), rgba(255, 255, 255, 0.1) 45%, rgba(255, 255, 255, 0));
+}
+
+.liquid-glass-banner::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  pointer-events: none;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0));
+}
+
 .hero-typing-cursor::after {
   content: '|';
   margin-left: 0.08em;

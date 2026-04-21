@@ -179,10 +179,10 @@ function Header() {
 
   return (
     <header
-      className={`sticky top-0 z-30 border-b border-[#d8e8e3] backdrop-blur transition-all duration-300 ease-out ${headerFadeClass}`}
+      className={`liquid-glass-banner sticky top-0 z-30 transition-all duration-300 ease-out ${headerFadeClass}`}
     >
       <nav
-        className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 md:px-8"
+        className="relative z-10 mx-auto flex max-w-7xl items-center justify-between px-5 py-4 md:px-8"
         aria-label="Main navigation"
       >
         <a href="#top" className="flex items-center gap-3" aria-label="Praxis Medical Systems home">
@@ -219,9 +219,9 @@ function Header() {
 }
 
 const headerFadeClasses = {
-  top: 'bg-[#fbfdfc]/95 opacity-100',
-  mid: 'bg-[#fbfdfc]/85 opacity-85',
-  low: 'bg-[#fbfdfc]/70 opacity-65',
+  top: 'opacity-100',
+  mid: 'opacity-90',
+  low: 'opacity-75',
 };
 
 function Hero() {
