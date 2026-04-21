@@ -279,11 +279,18 @@ function useTypewriterPhrases(phrases) {
 
 function HowItWorks() {
   const [activeStep, setActiveStep] = useState(0);
+  const [hasUserInteracted, setHasUserInteracted] = useState(false);
   const wheelLock = useRef(false);
   const touchStart = useRef(null);
 
   const showStep = (direction) => {
+    setHasUserInteracted(true);
     setActiveStep((currentStep) => (currentStep + direction + steps.length) % steps.length);
+  };
+
+  const selectStep = (index) => {
+    setHasUserInteracted(true);
+    setActiveStep(index);
   };
 
   const handleWheel = (event) => {
@@ -354,14 +361,21 @@ function HowItWorks() {
         onKeyDown={handleKeyDown}
       >
         {steps.map((step, index) => (
-          <StepCard key={step.title} step={step} index={index} activeStep={activeStep} onSelect={setActiveStep} />
+          <StepCard
+            key={step.title}
+            step={step}
+            index={index}
+            activeStep={activeStep}
+            onSelect={selectStep}
+            animate={hasUserInteracted}
+          />
         ))}
       </div>
     </Section>
   );
 }
 
-function StepCard({ step, index, activeStep, onSelect }) {
+function StepCard({ step, index, activeStep, onSelect, animate }) {
   const position = getCarouselPosition(index, activeStep, steps.length);
   const isVisible = Math.abs(position) <= 1;
   const isActive = position === 0;
@@ -376,7 +390,7 @@ function StepCard({ step, index, activeStep, onSelect }) {
 
   return (
     <article
-      className={`absolute left-1/2 top-0 min-h-[27rem] w-[82%] rounded-lg border border-[#d8e8e3] bg-white p-6 shadow-soft transition-all duration-300 ease-out md:min-h-[22rem] md:w-[32%] ${positionClass}`}
+      className={`absolute left-1/2 top-0 min-h-[27rem] w-[82%] rounded-lg border border-[#d8e8e3] bg-white p-6 shadow-soft md:min-h-[22rem] md:w-[32%] ${animate ? 'transition-all duration-300 ease-out' : ''} ${positionClass}`}
       role="listitem"
       aria-hidden={!isVisible}
       tabIndex={isSideCard ? 0 : undefined}
